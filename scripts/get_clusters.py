@@ -1,6 +1,32 @@
 import json
 import csv
 
+blacklist = [
+    "0x0000000000000000000000000000000000000000",
+    "0x4577a46a3ecf44e0ed44410b7793977ffbe22ce0",
+    "0x4156edbafc5091507de2dd2a53ded551a346f83b",
+    "0xc0e92525834c989fb1fe1e02463c0419a5c992a9",
+    "0xb8ff877ed78ba520ece21b1de7843a8a57ca47cb",
+    "0x6698d8d414360680bf6c320b5e88ecdff33e2339",
+    "0x9409ad1ce543eb2855bd2a5725a2d4ab9e271dea",
+    "0xdba800f4da03dba3f604268aec2ad9eb28a055a4",
+    "0x3ba38aec01d1412197f2da9cff918306a9e06a7d",
+    "0x049f14edbd5e63d9cbff4ae805ccccdaba1c202f",
+    "0x596ecc1c97dd7e602b6093ac2460b2c310dcb79d",
+    "0xd0511eeb11985627ad8c0da3f4644c363e6a2cc0",
+    "0xc4e7263dd870a29f1cfe438d1a7db48547b16888",
+    "0x620d7e459cffcdc56a874536dc19147de801a4a1",
+    "0xba9a3c0a22baebe8c4926227bde32d6edc0d5d28",
+    "0xe93685f3bba03016f02bd1828badd6195988d950",
+    "0x417b4adc279743fc49f047c323fc668db9e600d8",
+    "0x2cad75e380ddb12329231df6793a0343917be8b3",
+    "0x3d529c760f3ec4c89bdd6549ddabe9097c1da6e9",
+    "0xda81a723e748c782284bbb06ab74e3d0a9dbbc77",
+    "0x59ed948390f079f2534c052acc3419d34975e026",
+    "0x26c1fd9fd5a1338aabbdbe3f64f3e73369a0f4a0",
+    "0x23c658fe050b4eaeb9401768bf5911d11621629c",
+]
+
 def main():
     # Load the files
     files = [
@@ -80,7 +106,7 @@ def main():
             data = json.load(f)
             for row in data:
                 from_addr, to_addr, tx_hash = row
-                if from_addr == '0x0000000000000000000000000000000000000000' or to_addr == '0x0000000000000000000000000000000000000000':
+                if from_addr in blacklist or to_addr in blacklist:
                     continue
                 protocol, chain = file_map[file]
                 pair = tuple(sorted([from_addr, to_addr]))
